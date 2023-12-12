@@ -1,10 +1,4 @@
-import {
-  Box,
-  Button,
-  CssBaseline,
-  Typography,
-  useMediaQuery,
-} from '@mui/material'
+import { Box, Typography, useMediaQuery } from '@mui/material'
 import { Outlet } from 'react-router-dom'
 import Drawer from '@mui/material/Drawer'
 import List from '@mui/material/List'
@@ -14,15 +8,14 @@ import { useEffect, useState } from 'react'
 import IconButton from '@mui/material/IconButton'
 import MenuIcon from '@mui/icons-material/Menu'
 import { Link } from 'react-router-dom'
-import { ThemeProvider, createTheme, styled } from '@mui/material/styles'
+import { createTheme, styled } from '@mui/material/styles'
 import { Assessment, Close, Event, Home, Logout } from '@mui/icons-material'
-import theme from '../theme'
+
 const drawerWidth = 240
 const Main = styled('main', { shouldForwardProp: (prop) => prop !== 'open' })<{
   open?: boolean
 }>(({ theme, open }) => ({
   flexGrow: 1,
-  // padding: theme.spacing(3),
   transition: theme.transitions.create('margin', {
     easing: theme.transitions.easing.sharp,
     duration: theme.transitions.duration.leavingScreen,
@@ -89,7 +82,7 @@ const Sidebar = ({ isOpen, onClose }: any) => {
           <Link to="dashboard">
             <Box display="flex" gap={1} alignItems="center">
               <Home color="primary" />
-              <ListItemText primary="Dashboard" />
+              <Typography color="primary.main">Dashboard</Typography>
             </Box>
           </Link>
         </ListItem>
@@ -97,7 +90,7 @@ const Sidebar = ({ isOpen, onClose }: any) => {
           <Link to="calendar">
             <Box display="flex" gap={1} alignItems="center">
               <Event color="primary" />
-              <ListItemText primary="Calendar" color="primary" />
+              <Typography color="primary.main">Calendar</Typography>
             </Box>
           </Link>
         </ListItem>
@@ -105,7 +98,7 @@ const Sidebar = ({ isOpen, onClose }: any) => {
           <Link to="reports">
             <Box display="flex" gap={1} alignItems="center">
               <Assessment color="primary" />
-              <ListItemText primary="Reports" />
+              <Typography color="primary.main">Reports</Typography>
             </Box>
           </Link>
         </ListItem>
@@ -123,7 +116,7 @@ const Sidebar = ({ isOpen, onClose }: any) => {
 const Navbar = ({ isSidebarOpen, toggleSidebar }: any) => {
   return (
     <Box
-      bgcolor="black"
+      bgcolor="primary.main"
       width="100%"
       height="3rem"
       display="flex"
