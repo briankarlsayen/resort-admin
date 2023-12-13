@@ -9,7 +9,14 @@ import IconButton from '@mui/material/IconButton'
 import MenuIcon from '@mui/icons-material/Menu'
 import { Link } from 'react-router-dom'
 import { createTheme, styled } from '@mui/material/styles'
-import { Assessment, Close, Event, Home, Logout } from '@mui/icons-material'
+import {
+  Assessment,
+  Close,
+  Event,
+  Home,
+  Logout,
+  ConfirmationNumber,
+} from '@mui/icons-material'
 
 const drawerWidth = 240
 const Main = styled('main', { shouldForwardProp: (prop) => prop !== 'open' })<{
@@ -83,6 +90,14 @@ const Sidebar = ({ isOpen, onClose }: any) => {
             <Box display="flex" gap={1} alignItems="center">
               <Home color="primary" />
               <Typography color="primary.main">Dashboard</Typography>
+            </Box>
+          </Link>
+        </ListItem>
+        <ListItem>
+          <Link to="booking">
+            <Box display="flex" gap={1} alignItems="center">
+              <ConfirmationNumber color="primary" />
+              <Typography color="primary.main">Booking</Typography>
             </Box>
           </Link>
         </ListItem>
