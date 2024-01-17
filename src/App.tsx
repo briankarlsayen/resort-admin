@@ -8,6 +8,8 @@ import { ThemeProvider } from '@emotion/react'
 import theme from './theme'
 import { CssBaseline } from '@mui/material'
 import Booking from './pages/Booking'
+import { LocalizationProvider } from '@mui/x-date-pickers'
+import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs'
 // layout
 function App() {
   const router = createBrowserRouter([
@@ -40,10 +42,12 @@ function App() {
   ])
 
   return (
-    <ThemeProvider theme={theme}>
-      <CssBaseline />
-      <RouterProvider router={router} />
-    </ThemeProvider>
+    <LocalizationProvider dateAdapter={AdapterDayjs}>
+      <ThemeProvider theme={theme}>
+        <CssBaseline />
+        <RouterProvider router={router} />
+      </ThemeProvider>
+    </LocalizationProvider>
   )
 }
 

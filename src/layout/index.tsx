@@ -52,13 +52,17 @@ function Layout() {
   }
   return (
     <Box display="flex">
-      <Sidebar isOpen={isSidebarOpen} onClose={toggleSidebar} />
-      <Main open={isSidebarOpen}>
-        <Navbar isSidebarOpen={isSidebarOpen} toggleSidebar={toggleSidebar} />
-        <Box p={2}>
-          <Outlet />
-        </Box>
-      </Main>
+      <Box>
+        <Sidebar isOpen={isSidebarOpen} onClose={toggleSidebar} />
+      </Box>
+      <Box flex={1}>
+        <Main open={isSidebarOpen}>
+          <Navbar isSidebarOpen={isSidebarOpen} toggleSidebar={toggleSidebar} />
+          <Box p={2}>
+            <Outlet />
+          </Box>
+        </Main>
+      </Box>
     </Box>
   )
 }
