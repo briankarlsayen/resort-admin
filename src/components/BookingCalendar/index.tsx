@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import Calendar from 'react-calendar'
 import 'react-calendar/dist/Calendar.css'
 import './index.css'
@@ -13,11 +13,10 @@ import { getAllBookings, getBuildingNames } from '../../api'
 import theme from '../../theme'
 import DesktopTable from '../DesktopTable'
 import MobileTable from '../MobileTable'
-import { CalendarToday, EventBusy } from '@mui/icons-material'
+import { CalendarToday } from '@mui/icons-material'
 
 const BookingCalendar = () => {
   const [buildingNames, setBuildingNames] = useState([])
-  const [selectedDates, setSelectedDates] = useState<Date[]>([])
   const [selected, setSelected] = useState('')
   const [bookings, setBookings] = useState([])
   const [calendarBookings, setCalendarBookings] = useState([])
@@ -39,16 +38,8 @@ const BookingCalendar = () => {
     setSelected(buildings[0])
     setBookings(selectedBookings)
   }
-  const handleDateChange = (date: Date) => {
-    // Toggle the date selection
-    const newSelectedDates = selectedDates.includes(date)
-      ? selectedDates.filter((d) => d !== date)
-      : [...selectedDates, date]
 
-    setSelectedDates(newSelectedDates)
-  }
-
-  const handleChange = (name, newValue) => {
+  const handleChange = (_name, newValue) => {
     setSelected(newValue)
     const selectedBookings = calendarBookings.filter(
       (booking) => booking.buildingName === newValue

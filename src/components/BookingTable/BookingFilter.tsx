@@ -30,12 +30,9 @@ function BookingFilter() {
 
   const handleDateChange = (name, value) => {
     setInputFields({ ...inputFields, [name]: new Date(value) })
-    console.log('value', new Date(value))
   }
 
-  const handleSubmit = () => {
-    console.log('values', inputFields)
-  }
+  const handleSubmit = () => {}
 
   const [expanded, setExpanded] = useState(false)
   const handleExpanded = () => {

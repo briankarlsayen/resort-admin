@@ -1,5 +1,5 @@
 import { Card, CardContent, Grid, Typography } from '@mui/material'
-import React, { useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { generateBooking } from './data'
 import BookingDialog from '../BookingDialog'
 
@@ -14,7 +14,6 @@ function RecentBookingCards() {
     setSelectedBooking(item)
     setOpen(true)
   }
-  console.log('selectedBooking', selectedBooking)
   useEffect(() => {
     setList(Array.from({ length: 25 }, () => generateBooking()))
   }, [])
@@ -29,7 +28,7 @@ function RecentBookingCards() {
       )}
       {list.map((item) => {
         return (
-          <Grid item xs={12} sm={3} onClick={(e) => handleDialogOpen(item)}>
+          <Grid item xs={12} sm={3} onClick={() => handleDialogOpen(item)}>
             <Card sx={{ height: '100%' }}>
               <CardContent>
                 <Grid container spacing={2}>

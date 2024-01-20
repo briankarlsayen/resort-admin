@@ -1,4 +1,3 @@
-import React from 'react'
 import BookingCalendar from '../../components/BookingCalendar'
 import { Box, Typography } from '@mui/material'
 

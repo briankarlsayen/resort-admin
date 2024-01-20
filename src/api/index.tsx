@@ -3,7 +3,7 @@ import { bookingData } from './data'
 const DELAY_SEC = 0
 
 const delay = (data) => {
-  return new Promise((resolve, reject) => {
+  return new Promise((resolve, _reject) => {
     setTimeout(() => {
       resolve(data)
     }, DELAY_SEC * 1000) // 3000 milliseconds (3 seconds)
@@ -29,8 +29,7 @@ export const getBuildingNames = async () => {
 }
 
 export const getBookingByMonthYear = (month, year) => {
-  const refDate = new Date(2024, month, 1)
-  // const refDate = new Date(month, year)
+  const refDate = new Date(year, month, 1)
   const dateInRange = defaultBookingData.map((booking) => {
     const endDate = new Date(booking.endDate)
     const endMonth = endDate.getMonth() + 1
