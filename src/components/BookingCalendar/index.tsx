@@ -2,20 +2,42 @@ import React, { useEffect, useState } from 'react'
 import Calendar from 'react-calendar'
 import 'react-calendar/dist/Calendar.css'
 import './index.css'
-import { Autocomplete, Box, TextField, Typography } from '@mui/material'
+import {
+  Autocomplete,
+  Box,
+  TextField,
+  Typography,
+  useMediaQuery,
+} from '@mui/material'
 import { getAllBookings, getBuildingNames } from '../../api'
-const MultiDateRangeCalendar = () => {
+import theme from '../../theme'
+import DesktopTable from '../DesktopTable'
+import MobileTable from '../MobileTable'
+import { CalendarToday, EventBusy } from '@mui/icons-material'
+
+const BookingCalendar = () => {
   const [buildingNames, setBuildingNames] = useState([])
   const [selectedDates, setSelectedDates] = useState<Date[]>([])
-  const [selected, setSelected] = useState()
+  const [selected, setSelected] = useState('')
+  const [bookings, setBookings] = useState([])
+  const [calendarBookings, setCalendarBookings] = useState([])
 
   useEffect(() => {
     fetchData()
   }, [])
   const fetchData = async () => {
-    const bookings = await getAllBookings()
+    const fetchedBookings = await getAllBookings()
     const buildings = await getBuildingNames()
     setBuildingNames(buildings as any[])
+    setCalendarBookings(fetchedBookings as any[])
+
+    // default bookings
+    const defaultBuilding = buildings[0]
+    const selectedBookings = (fetchedBookings as any[]).filter(
+      (booking) => booking.buildingName === defaultBuilding
+    )
+    setSelected(buildings[0])
+    setBookings(selectedBookings)
   }
   const handleDateChange = (date: Date) => {
     // Toggle the date selection
@@ -25,28 +47,20 @@ const MultiDateRangeCalendar = () => {
 
     setSelectedDates(newSelectedDates)
   }
-  console.log('buildingNames', buildingNames)
 
-  const dateRanges = [
-    {
-      start: '01-01-2024',
-      end: '01-05-2024',
-    },
-    {
-      start: '01-08-2024',
-      end: '01-09-2024',
-    },
-    {
-      start: '01-21-2024',
-      end: '01-24-2024',
-    },
-  ]
-
-  const handleChange = (name, newValue) => {}
-  const options = ['Option 1', 'Option 2', 'Option 3', 'Option 4', 'Option 5']
+  const handleChange = (name, newValue) => {
+    setSelected(newValue)
+    const selectedBookings = calendarBookings.filter(
+      (booking) => booking.buildingName === newValue
+    )
+    setBookings(selectedBookings)
+    console.log('newValue', newValue)
+    console.log('selectedBookings', selectedBookings)
+  }
+  console.log('bookings', bookings)
 
   return (
-    <Box id="calendar-container">
+    <Box>
       <Typography variant="h6" pb={1}>
         Select Building Calendar
       </Typography>
@@ -65,13 +79,14 @@ const MultiDateRangeCalendar = () => {
           />
         )}
       </Box>
-      <Box display="flex" alignItems="center" justifyContent="center" pt={3}>
+      <Box maxWidth="md" pt={3}>
         <Calendar
-          onChange={handleDateChange}
+          // onChange={handleDateChange}
           tileClassName={({ date, view }) => {
-            const isInRange = dateRanges.some(
+            const isInRange = bookings.some(
               (range) =>
-                date >= new Date(range.start) && date <= new Date(range.end)
+                date >= new Date(range.startDate) &&
+                date <= new Date(range.endDate)
             )
             if (view === 'month' && isInRange) {
               return 'highlight'
@@ -79,8 +94,37 @@ const MultiDateRangeCalendar = () => {
           }}
         ></Calendar>
       </Box>
+      <Box>
+        <Typography variant="h6" py={2}>
+          Events
+        </Typography>
+        <Events data={bookings} />
+      </Box>
     </Box>
   )
 }
 
-export default MultiDateRangeCalendar
+const Events = ({ data: bookingData }) => {
+  const isMobile = useMediaQuery(theme.breakpoints.up('sm'))
+  return bookingData.length ? (
+    isMobile ? (
+      <DesktopTable data={bookingData} />
+    ) : (
+      <MobileTable data={bookingData} />
+    )
+  ) : (
+    <Box
+      display="flex"
+      flexGrow="1"
+      justifyContent="center"
+      alignItems="center"
+      gap={2}
+      pt={2}
+    >
+      <Typography variant="h4">No Events</Typography>
+      <CalendarToday fontSize="large" />
+    </Box>
+  )
+}
+
+export default BookingCalendar

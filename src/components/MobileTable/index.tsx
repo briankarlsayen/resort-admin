@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import {
   Card,
   CardContent,
@@ -20,6 +20,10 @@ export interface MobileTable {
 const cardsPerPage = 3 // Number of cards to display per page
 
 const MobileTable = ({ data }: MobileTable) => {
+  useEffect(() => {
+    setCurrentPage(1)
+  }, [data])
+
   const card = (booking: BookingType) => (
     <React.Fragment>
       <CardContent>

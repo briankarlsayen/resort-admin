@@ -14,7 +14,7 @@ import {
   convertToCamelCaseWithSpaces,
   formatDateToCustomFormat,
 } from '../../utils/format'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 
 const StyledTableRow = styled(TableRow)({
   backgroundColor: '#00aa6c',
@@ -25,7 +25,7 @@ const StyledTableCell = styled(TableCell)({
 })
 
 function DesktopTable({ data }: MobileTable) {
-  const thead = Object.keys(data[0])
+  const thead = data.length ? Object.keys(data[0]) : null
 
   const [page, setPage] = useState(0)
   const [rowsPerPage, setRowsPerPage] = useState(5)
@@ -38,10 +38,14 @@ function DesktopTable({ data }: MobileTable) {
     setPage(0)
   }
 
-  const slicedData = data.slice(
+  const slicedData = data?.slice(
     page * rowsPerPage,
     page * rowsPerPage + rowsPerPage
   )
+
+  useEffect(() => {
+    setPage(0)
+  }, [data])
 
   return (
     <Paper sx={{ width: '100%' }}>
@@ -49,7 +53,7 @@ function DesktopTable({ data }: MobileTable) {
         <Table sx={{ minWidth: 650 }} aria-label="simple table">
           <TableHead>
             <StyledTableRow>
-              {thead.map((key, index) => {
+              {thead?.map((key, index) => {
                 return (
                   <StyledTableCell key={index}>
                     {convertToCamelCaseWithSpaces(key)}
