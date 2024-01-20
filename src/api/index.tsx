@@ -10,8 +10,10 @@ const delay = (data) => {
   })
 }
 
+const defaultBookingData = bookingData(50)
+
 export const getAllBookings = async () => {
-  return await delay(bookingData(20))
+  return await delay(defaultBookingData)
 }
 
 export const getBuildingNames = async () => {
@@ -23,6 +25,21 @@ export const getBuildingNames = async () => {
     'Hut 2',
     'Hut 3',
   ]
-
   return await delay(buildingNameList)
+}
+
+export const getBookingByMonthYear = (month, year) => {
+  const refDate = new Date(2024, month, 1)
+  // const refDate = new Date(month, year)
+  const dateInRange = defaultBookingData.map((booking) => {
+    const endDate = new Date(booking.endDate)
+    const endMonth = endDate.getMonth() + 1
+    const endYear = endDate.getFullYear()
+    const refMonth = refDate.getMonth()
+    const refYear = refDate.getFullYear()
+
+    if (endMonth === refMonth && endYear === refYear) return booking
+  })
+
+  return dateInRange.filter((date) => !!date)
 }

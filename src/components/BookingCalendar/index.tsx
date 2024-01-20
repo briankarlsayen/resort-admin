@@ -54,16 +54,13 @@ const BookingCalendar = () => {
       (booking) => booking.buildingName === newValue
     )
     setBookings(selectedBookings)
-    console.log('newValue', newValue)
-    console.log('selectedBookings', selectedBookings)
   }
-  console.log('bookings', bookings)
 
   return (
     <Box>
-      <Typography variant="h6" pb={1}>
+      {/* <Typography variant="h6" pb={1}>
         Select Building Calendar
-      </Typography>
+      </Typography> */}
       <Box>
         {buildingNames.length && (
           <Autocomplete
